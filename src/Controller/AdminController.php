@@ -26,6 +26,30 @@ class AdminController
 
     public function indexAction(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        return $this->encoder->encode($request, $response, 'Admin/index.html.twig');
+
+        $data = [
+            'hosts' => [
+                [
+                    'name' => 'Server 1',
+                    'img' => 'https://cdn.pixabay.com/photo/2013/07/13/10/17/computer-156948__340.png',
+                ],
+                [
+                    'name' => 'Server 3',
+                    'img' => 'https://cdn.pixabay.com/photo/2013/07/13/10/17/computer-156948__340.png',
+                ],
+                [
+                    'name' => 'Server 2',
+                    'img' => 'https://cdn.pixabay.com/photo/2013/07/13/10/17/computer-156948__340.png',
+                ],
+                ['name' => 'Mail', 'img' => 'https://cdn.pixabay.com/photo/2013/07/13/10/17/computer-156948__340.png'],
+                ['name' => 'Mail 2', 'img' => 'https://cdn.pixabay.com/photo/2013/07/13/10/17/computer-156948__340.png'],
+                ['name' => 'Mail 4', 'img' => 'https://cdn.pixabay.com/photo/2013/07/13/10/17/computer-156948__340.png'],
+                [
+                    'name' => 'Uplink',
+                    'img' => 'https://cdn.pixabay.com/photo/2013/07/13/10/17/computer-156948__340.png',
+                ],
+            ],
+        ];
+        return $this->encoder->encode($request, $response, 'Admin/index.html.twig', $data);
     }
 }

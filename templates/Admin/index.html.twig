@@ -1,5 +1,26 @@
 {% extends 'layout.app.html.twig' %}
 
 {% block content %}
-    Hello Admin
+    <div class="uk-container-expand uk-padding-small" uk-height-viewport="expand: true">
+        <div class="uk-grid uk-grid-small uk-child-width-1-5@s uk-flex-center uk-text-center"
+             uk-grid
+             uk-height-match="target: .uk-card">
+            {% for host in hosts %}
+                <div>
+                    <div class="uk-card uk-card-default uk-card-body">
+                        <p>{{ host.name }}</p>
+                        <img class="img" src="{{ host.img }}" alt="Server">
+                    </div>
+                </div>
+            {% endfor %}
+            <div>
+                <div class="uk-card uk-card-default uk-card-body uk-text-center">
+                    <div class="uk-position-center">
+                        <p>Add another</p>
+                        <span uk-icon="icon: plus-circle; ratio: 2"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
