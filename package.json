@@ -1,0 +1,20 @@
+{
+  "name": "officumm",
+  "version": "1.0.0",
+  "description": "Used only for testing",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "PROPRITARY",
+  "dependencies": {
+    "phantomjs-prebuilt": "^2.1.16",
+    "serverless-domain-manager": "^3.2.6",
+    "serverless-plugin-scripts": "^1.0.2"
+  },
+  "devDependencies": {}
+}

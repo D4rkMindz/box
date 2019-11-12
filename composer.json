@@ -1,0 +1,67 @@
+{
+    "name": "venovum/officum",
+    "description": "The backend of the venovum application",
+    "license": "PROPRITARY",
+    "require": {
+        "slim/slim": "^4.0.0",
+        "cakephp/database": "^3.5",
+        "mailgun/mailgun-php": "^2.3",
+        "monolog/monolog": "^1.23",
+        "slim/twig-view": "^2.3",
+        "odan/twig-translation": "^0.2.2",
+        "symfony/translation": "^4.3",
+        "php-http/curl-client": "^1.7",
+        "phpmailer/phpmailer": "^6.0",
+        "tuupola/slim-jwt-auth": "^3.4",
+        "ext-pdo": "*",
+        "ext-json": "*",
+        "ext-readline": "*",
+        "ext-openssl": "*",
+        "ext-fileinfo": "*",
+        "ext-bcmath": "*",
+        "ramsey/uuid": "^3.8",
+        "php-di/php-di": "^6.0",
+        "slim/psr7": "^0.6.0",
+        "psr7-sessions/storageless": "^5.1"
+    },
+    "require-dev": {
+        "odan/phinx-migrations-generator": "^2.3",
+        "phpunit/phpunit": "8.0.*",
+        "codeception/codeception": "^3.0",
+        "codeception/phpunit-wrapper": "^8.0",
+        "phpstan/phpstan": "^0.11.8",
+        "friendsofphp/php-cs-fixer": "^2.15",
+        "flow/jsonpath": "^0.4.0"
+    },
+    "autoload": {
+        "files": [
+            "lib/services.php",
+            "lib/util.php"
+        ],
+        "psr-4": {
+            "App\\": "src"
+        }
+    },
+    "scripts": {
+        "travis": [
+            "@php:stan",
+            "@style:fix",
+            "@test"
+        ],
+        "test": [
+            "vendor/bin/codecept build",
+            "APP_CONFIG=integration vendor/bin/codecept run --no-rebuild"
+        ],
+        "php:stan": "vendor/bin/phpstan analyse --no-progress --level=5 -c phpstan.neon src",
+        "style:fix": "vendor/bin/php-cs-fixer fix --config=.cs.php --dry-run",
+        "style:fix:really": "vendor/bin/php-cs-fixer fix --config=.cs.php"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\Acceptance\\": "tests/acceptance",
+            "Test\\Api\\": "tests/api",
+            "Test\\Functional\\": "tests/functional",
+            "Test\\Unit\\": "tests/unit"
+        }
+    }
+}

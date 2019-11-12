@@ -1,0 +1,5 @@
+parameters:
+    excludes_analyse:
+        - *.html.php
+        - *_support*
+        - *_generated*
