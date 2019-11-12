@@ -99,6 +99,14 @@ $container[Twig::class] = static function (SettingsInterface $settings, App $app
     $environment->addGlobal('base_path', $basePath . '/');
     // Add Twig extensions
     $twig->addExtension(new TwigTranslationExtension());
+    $twig->addExtension(new \Fullpipe\TwigWebpackExtension\WebpackExtension(
+    // must be a absolute path
+        $settings->get('public') . '/assets/manifest.json',
+        // url path for js
+        $basePath . '/assets/',
+        // url path for css
+        $basePath . '/assets/'
+    ));
 
     return $twig;
 };

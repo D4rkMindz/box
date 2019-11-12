@@ -17,7 +17,7 @@ $config = [
     'displayErrorDetails' => true,
     'determineRouteBeforeAppMiddleware' => true,
     'addContentLengthHeader' => false,
-    'public' => __DIR__.'/../public/'
+    'public' => __DIR__.'/../public'
 ];
 
 $config[Translator::class] = [

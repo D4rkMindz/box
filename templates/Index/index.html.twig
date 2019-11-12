@@ -1,4 +1,11 @@
 {% extends 'layout.web.html.twig' %}
+{% block css %}
+    {% webpack_entry_css 'Index/index' %}
+{% endblock %}
+
+{% block js %}
+    {% webpack_entry_js 'Index/index' %}
+{% endblock %}
 
 {% block content %}
     Hello World

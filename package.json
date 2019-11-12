@@ -1,20 +1,21 @@
 {
-  "name": "officumm",
+  "name": "box",
   "version": "1.0.0",
-  "description": "Used only for testing",
-  "directories": {
-    "lib": "lib",
-    "test": "tests"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "PROPRITARY",
-  "dependencies": {
-    "phantomjs-prebuilt": "^2.1.16",
-    "serverless-domain-manager": "^3.2.6",
-    "serverless-plugin-scripts": "^1.0.2"
-  },
-  "devDependencies": {}
+  "license": "MIT",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.13.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "sass-loader": "^8.0.0",
+    "terser-webpack-plugin": "latest",
+    "webpack": "^4.41.2",
+    "webpack-assets-manifest": "^3.1.1",
+    "webpack-cli": "^3.3.9",
+    "webpack-manifest-plugin": "^2.0.4"
+  }
 }

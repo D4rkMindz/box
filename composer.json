@@ -22,7 +22,8 @@
         "ramsey/uuid": "^3.8",
         "php-di/php-di": "^6.0",
         "slim/psr7": "^0.6.0",
-        "psr7-sessions/storageless": "^5.1"
+        "psr7-sessions/storageless": "^5.1",
+        "fullpipe/twig-webpack-extension": "^2.0"
     },
     "require-dev": {
         "odan/phinx-migrations-generator": "^2.3",
