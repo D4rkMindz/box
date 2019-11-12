@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ title }}</title>
+    {% webpack_entry_css 'vendors' %}
+    {% webpack_entry_css 'Layout' %}
     {% block css %}{% endblock %}
 </head>
 <body>
 {% block content %}{% endblock %}
+
+{% webpack_entry_js 'vendors' %}
+{% webpack_entry_js 'Layout' %}
 {% block js %}{% endblock %}
 </body>
 </html>

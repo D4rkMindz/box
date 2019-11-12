@@ -4,6 +4,7 @@ use App\Service\Settings;
 use App\Service\SettingsInterface;
 use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
+use Fullpipe\TwigWebpackExtension\WebpackExtension;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
@@ -26,6 +27,7 @@ use PSR7Sessions\Storageless\Session\SessionInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
+use Slim\Views\TwigExtension;
 use Symfony\Component\Translation\Loader\MoFileLoader;
 use Symfony\Component\Translation\Translator;
 use Twig\Loader\FilesystemLoader;
@@ -97,9 +99,10 @@ $container[Twig::class] = static function (SettingsInterface $settings, App $app
     // Add relative base url
     $basePath = $app->getBasePath();
     $environment->addGlobal('base_path', $basePath . '/');
+
     // Add Twig extensions
     $twig->addExtension(new TwigTranslationExtension());
-    $twig->addExtension(new \Fullpipe\TwigWebpackExtension\WebpackExtension(
+    $twig->addExtension(new WebpackExtension(
     // must be a absolute path
         $settings->get('public') . '/assets/manifest.json',
         // url path for js

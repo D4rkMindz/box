@@ -4,6 +4,9 @@ namespace App\Service\Encoder;
 
 use Psr\Http\Message\ResponseInterface;
 use Slim\Views\Twig;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class HTMLEncoder
@@ -30,6 +33,9 @@ class HTMLEncoder implements EncoderInterface
      * @param array             $data
      *
      * @return ResponseInterface
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function encode(ResponseInterface $response, array $data): ResponseInterface
     {
