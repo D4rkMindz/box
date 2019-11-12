@@ -39,6 +39,6 @@ class IndexController
      */
     public function indexAction(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        return $this->encoder->encode($response, ['template' => 'Index/index.html.twig']);
+        return $this->encoder->encode($request, $response, 'Index/index.html.twig');
     }
 }

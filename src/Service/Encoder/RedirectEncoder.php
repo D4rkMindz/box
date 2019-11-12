@@ -36,6 +36,6 @@ class RedirectEncoder
     {
         $route = $this->base = $url;
 
-        return $response->withStatus(HttpCode::TEMPORARY_REDIRECT)->withHeader('Location', $route);
+        return $response->withStatus(HttpCode::SEE_OTHER)->withAddedHeader('Location', $route);
     }
 }

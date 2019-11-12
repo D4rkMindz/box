@@ -50,8 +50,9 @@ $config['debugmail'] = [
 
 $config['auth'] = [
     'relaxed' => [
-        'auth' => true,
         'root' => true,
+        'auth' => true,
+        'auth.login' => true,
     ]
 ];
 

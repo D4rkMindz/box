@@ -50,7 +50,7 @@ class ExceptionMiddleware implements MiddlewareInterface
         } catch (Exception $exception) {
             $response = $this->responseFactory->createResponse(200);
 
-            return $this->encoder->encode($response, ['template' => 'Error/index.html.twig']);
+            return $this->encoder->encode($request, $response, 'Error/index.html.twig');
         }
     }
 
