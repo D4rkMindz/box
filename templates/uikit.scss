@@ -1,1 +1,17 @@
+@import "~uikit/src/scss/variables";
 @import "~uikit/dist/css/uikit.min.css";
+
+
+.uk-card-danger {
+    background-color: $button-danger-background;
+    color: $button-danger-color;
+}
+
+
+.uk-text-white {
+    color: #EFEFEF
+}
+
+.img {
+    max-height: 20vh;
+}

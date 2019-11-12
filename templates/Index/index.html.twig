@@ -1,12 +1,23 @@
 {% extends 'layout.web.html.twig' %}
-{% block css %}
-    {% webpack_entry_css 'Index/index' %}
-{% endblock %}
-
-{% block js %}
-    {% webpack_entry_js 'Index/index' %}
-{% endblock %}
 
 {% block content %}
-    Hello World
+    <div class="uk-container-expand uk-padding-small" uk-height-viewport="expand: true">
+        <div class="uk-grid uk-grid-small uk-child-width-1-{{ col_count }}@s uk-flex-center uk-text-center" uk-grid>
+            {% for host in hosts %}
+                <div>
+                    <div class="uk-card uk-card-default uk-card-body">
+                        <p>{{ host.name }}</p>
+                        <img class="img" src="{{ host.img }}" alt="Server">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="uk-height-1-1 uk-padding-small uk-background-primary uk-text-white uk-flex-center " uk-grid
+         uk-sticky="bottom: true">
+        <div>
+            Zently<br>
+            0800 800 800
+        </div>
+    </div>
 {% endblock %}
