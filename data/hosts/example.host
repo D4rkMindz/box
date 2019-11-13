@@ -1,0 +1,32 @@
+{
+  "name": "Server 1",
+  "required": [
+    "IP",
+    "OBJECT",
+    "INTERVAL",
+    "USERNAME",
+    "PASSWORD"
+  ],
+  "config": [
+    {
+      "type": "IP",
+      "value": "192.168.0.1"
+    },
+    {
+      "type": "OBJECT",
+      "value": "apache_server"
+    },
+    {
+      "type": "INTERVAL",
+      "value": 10
+    },
+    {
+      "type": "USERNAME",
+      "value": "root"
+    },
+    {
+      "type": "PASSWORD",
+      "value": "P4S5VV0RD"
+    }
+  ]
+}
