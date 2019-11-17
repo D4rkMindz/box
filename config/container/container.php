@@ -1,10 +1,13 @@
 <?php
 
+use App\Service\Nagios\NagiosInterface;
 use App\Service\Settings;
 use App\Service\SettingsInterface;
 use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
 use Fullpipe\TwigWebpackExtension\WebpackExtension;
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
@@ -27,7 +30,6 @@ use PSR7Sessions\Storageless\Session\SessionInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
-use Slim\Views\TwigExtension;
 use Symfony\Component\Translation\Loader\MoFileLoader;
 use Symfony\Component\Translation\Translator;
 use Twig\Loader\FilesystemLoader;
@@ -112,6 +114,19 @@ $container[Twig::class] = static function (SettingsInterface $settings, App $app
     ));
 
     return $twig;
+};
+
+/**
+ * HTTP Client
+ *
+ * @param SettingsInterface $settings
+ *
+ * @return ClientInterface
+ */
+$container[ClientInterface::class] = static function (SettingsInterface $settings): ClientInterface {
+    $config = $settings->get(ClientInterface::class);
+
+    return new Client(['base_uri' => $config['base_uri']]);
 };
 
 /**
@@ -218,4 +233,17 @@ $container[FileSystemInterface::class] = static function (SettingsInterface $set
     $config = $settings->get(FileSystemInterface::class);
 
     return new FileSystem(new Local($config['root']));
+};
+
+/**
+ * Nagios Filesystem interface.
+ *
+ * @param SettingsInterface $settings
+ *
+ * @return Filesystem
+ */
+$container[NagiosInterface::class] = static function (SettingsInterface $settings) {
+    $config = $settings->get(FilesystemInterface::class);
+
+    return new FileSystem(new Local($config['nagios']));
 };

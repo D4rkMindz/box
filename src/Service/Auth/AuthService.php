@@ -2,47 +2,37 @@
 
 namespace App\Service\Auth;
 
-use App\Exception\AuthenticationException;
-use App\Exception\RecordNotFoundException;
-use App\Repository\UserDataRepository;
-use App\Repository\UserRepository;
-use App\Service\SettingsInterface;
-use App\Service\Type\UserDataKey;
-use Codeception\Util\HttpCode;
-use DateTime;
-use DateTimeInterface;
-use DateTimeZone;
-use Firebase\JWT\JWT;
+use App\Service\API\APIAuthService;
 
 /**
  * Class AuthService
  */
 class AuthService
 {
-    /** @var array */
-    private $config;
+    /** @var APIAuthService */
+    private $apiAuth;
 
     /**
      * AuthService constructor.
      *
-     * @param SettingsInterface  $settings
+     * @param APIAuthService $apiAuth
      */
     public function __construct(
-        SettingsInterface $settings
+        APIAuthService $apiAuth
     ) {
-        $this->config = $settings->get(JWT::class);
+        $this->apiAuth = $apiAuth;
     }
 
     /**
      * Check if a user can login.
      *
-     * @param int    $userId
+     * @param string $username
      * @param string $password
      *
-     * @return bool
+     * @return array
      */
-    public function canLogin(int $userId, string $password)
+    public function login(string $username, string $password): array
     {
-        return true;
+        return $this->apiAuth->login($username, $password);
     }
 }

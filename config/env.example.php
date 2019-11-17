@@ -1,5 +1,7 @@
 <?php
 
+use GuzzleHttp\ClientInterface;
+
 $env = [];
 
 $env['displayErrorDetails'] = true;
@@ -16,5 +18,7 @@ $env['debugmail']['password'] = 'your-password';
 $env['twig']['assetCache']['minify'] = false;
 $env['twig']['assetCache']['cache_enabled'] = false;
 $env['twig']['autoReload'] = true;
+
+$env[ClientInterface::class]['base_uri'] = 'https://admin.zently.ch';
 
 return $env;

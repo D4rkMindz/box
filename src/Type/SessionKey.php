@@ -8,4 +8,5 @@ namespace App\Type;
 class SessionKey
 {
     public const AUTHENTICATED = 'authenticated';
+    public const TOKENS = 'tokens';
 }

@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Exception\AuthenticationException;
+use App\Service\Auth\AuthService;
 use App\Service\Encoder\HTMLEncoder;
 use App\Service\Encoder\RedirectEncoder;
 use App\Type\SessionKey;
-use Psr\Http\Message\ResponseFactoryInterface;
+use App\Util\ArrayReader;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
@@ -22,19 +24,24 @@ class AuthController
     private $logger;
     /** @var RedirectEncoder */
     private $redirect;
+    /** @var AuthService */
+    private $auth;
 
     /**
      * IndexController constructor.
      *
-     * @param HTMLEncoder              $encoder
-     * @param RedirectEncoder          $redirect
-     * @param LoggerInterface          $logger
+     * @param AuthService     $auth
+     * @param HTMLEncoder     $encoder
+     * @param RedirectEncoder $redirect
+     * @param LoggerInterface $logger
      */
     public function __construct(
+        AuthService $auth,
         HTMLEncoder $encoder,
         RedirectEncoder $redirect,
         LoggerInterface $logger
     ) {
+        $this->auth = $auth;
         $this->encoder = $encoder;
         $this->redirect = $redirect;
         $this->logger = $logger;
@@ -59,8 +66,27 @@ class AuthController
      */
     public function loginAction(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
+        $data = new ArrayReader($request->getParsedBody());
+        $username = $data->findString('username');
+        $password = $data->findString('password');
+
+        try {
+            $tokens = $this->auth->login($username, $password);
+        } catch (AuthenticationException $exception) {
+            $this->logger->info('Authentication failed for ' . $username . '  because of an invalid username');
+
+            return $this->encoder->encode(
+                $request,
+                $response,
+                'Auth/index.html.twig',
+                ['error' => $exception->getMessage()]
+            );
+        }
+
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
         $session->set(SessionKey::AUTHENTICATED, true);
+        $session->set(SessionKey::TOKENS, $tokens);
+
         return $this->redirect->encode($response, '/admin');
     }
 
@@ -74,6 +100,7 @@ class AuthController
     {
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
         $session->remove(SessionKey::AUTHENTICATED);
+
         return $this->redirect->encode($response, '/login');
     }
 }

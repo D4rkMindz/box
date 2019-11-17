@@ -1,6 +1,8 @@
 <?php
 
+use App\Service\Nagios\NagiosInterface;
 use Firebase\JWT\JWT;
+use GuzzleHttp\ClientInterface;
 use League\Flysystem\FilesystemInterface;
 use Psr\Log\LoggerInterface;
 use PSR7Sessions\Storageless\Session\SessionInterface;
@@ -25,6 +27,9 @@ $config[Translator::class] = [
     'path' => __DIR__ . '/../resources/locale',
 ];
 
+$config[ClientInterface::class] = [
+    'base_uri' => 'https://api.example.com',
+];
 
 $config['twig'] = [
     'path' => __DIR__ . '/../templates',
@@ -64,6 +69,13 @@ $config[LoggerInterface::class] = [
 
 $config[FilesystemInterface::class] = [
     'root' => __DIR__ . '/../data',
+    'nagios' => __DIR__ . '/../data/nagios',
+];
+
+$config[NagiosInterface::class] = [
+    'config_root' => '/usr/local/nagios/etc/',
+    'object_root' => '/usr/local/nagios/etc/objects/',
+    'main_config' => '/usr/local/nagios/etc/nagios.cfg',
 ];
 
 $config[SessionInterface::class] = [
