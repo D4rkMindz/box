@@ -12,7 +12,7 @@ const sassLoaders = ['style-loader', 'css-loader', 'sass-loader'];
 module.exports = {
   entry: {
     'Layout': './templates/layout.js',
-    'Admin/admin.js': './templates/Admin/admin.js',
+    'Admin/admin': './templates/Admin/admin.js',
   },
   output: {
     path: path.resolve(__dirname, 'public/assets'),
@@ -42,6 +42,9 @@ module.exports = {
         test: /\.vue$/i,
         loader: 'vue-loader',
         options: {
+          esModule: true,
+          cacheBusting: false,
+          optimizeSSR: false,
           loaders: {
             css: `vue-style-loader${sassLoaders.map(e => `!${e}`).join('')}`,
             scss: `vue-style-loader${sassLoaders.map(e => `!${e}`).join('')}`,

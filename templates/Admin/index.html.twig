@@ -1,7 +1,11 @@
 {% extends 'layout.app.html.twig' %}
 
 {% block js %}
-    {% webpack_entry_js 'Admin/admin.js' %}
+    {% webpack_entry_js 'Admin/admin' %}
+{% endblock %}
+
+{% block css %}
+    {% webpack_entry_css 'Admin/admin' %}
 {% endblock %}
 
 {% block content %}

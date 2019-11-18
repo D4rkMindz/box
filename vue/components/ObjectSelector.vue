@@ -17,7 +17,7 @@
         <div class="uk-modal-body">
           <p>Please select one from the list below</p>
           <dl v-for="(template, templateClass) in templates" :key="templateClass"
-              class="uk-description-list uk-description-list-divider">
+              class="uk-description-list uk-description-list-divider dl">
             <dt>{{ template.name }}</dt>
             <dd>{{ template.description }}</dd>
           </dl>
@@ -48,6 +48,13 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+  .dl {
+    padding: 15px;
 
+    &:hover {
+      background-color: darken(#fff, 15%);
+      cursor: pointer;
+    }
+  }
 </style>
