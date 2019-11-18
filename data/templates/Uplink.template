@@ -1,0 +1,17 @@
+define host {
+    use                     generic-host
+
+    host_name               {{ host_name }}
+    alias                   {{ alias }}
+    address                 {{ address }}
+    max_check_attempts      3
+    check_command           check-host-alive
+    check_interval          {{ check_interval }}
+}
+
+define service {
+    use                     local-service
+    host_name               {{ host_name }}
+    service_description     PING
+    check_command           check_ping!100.0,20%!500.0,60%
+}

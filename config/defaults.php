@@ -69,13 +69,14 @@ $config[LoggerInterface::class] = [
 
 $config[FilesystemInterface::class] = [
     'root' => __DIR__ . '/../data',
-    'nagios' => __DIR__ . '/../data/nagios',
 ];
 
 $config[NagiosInterface::class] = [
-    'config_root' => '/usr/local/nagios/etc/',
-    'object_root' => '/usr/local/nagios/etc/objects/',
-    'main_config' => '/usr/local/nagios/etc/nagios.cfg',
+    'nagios_root' => '/usr/local/nagios',
+    'config_root' => 'etc/',
+    'template_root' => 'templates/',
+    'object_root' => 'etc/objects/',
+    'main_config' => 'etc/nagios.cfg',
 ];
 
 $config[SessionInterface::class] = [

@@ -1,32 +1,27 @@
 {
-  "name": "Server 1",
+  "type": "ONLINE_CHECK",
   "required": [
-    "IP",
-    "OBJECT",
-    "INTERVAL",
-    "USERNAME",
-    "PASSWORD"
+    "host_name",
+    "alias",
+    "address",
+    "check_interval",
   ],
   "config": [
     {
-      "type": "IP",
+      "type": "host_name",
+      "value": "Webserver"
+    },
+    {
+      "type": "alias",
+      "value": "Der interne Webserver"
+    },
+    {
+      "type": "address",
       "value": "192.168.0.1"
     },
     {
-      "type": "OBJECT",
-      "value": "apache_server"
-    },
-    {
-      "type": "INTERVAL",
+      "type": "check_interval",
       "value": 10
-    },
-    {
-      "type": "USERNAME",
-      "value": "root"
-    },
-    {
-      "type": "PASSWORD",
-      "value": "P4S5VV0RD"
     }
   ]
 }

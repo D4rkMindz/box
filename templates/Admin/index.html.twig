@@ -36,7 +36,12 @@
                 <p>Please select one from the list below</p>
 
                 <div>
-
+                    {% for template in templates %}
+                        <dl class="uk-description-list uk-description-list-divider">
+                            <dt>{{ template.name }}</dt>
+                            <dd>{{ template.description }}</dd>
+                        </dl>
+                    {% endfor %}
                 </div>
             </div>
             <div class="uk-modal-footer uk-text-right">

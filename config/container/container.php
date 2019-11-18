@@ -1,5 +1,6 @@
 <?php
 
+use App\Service\Nagios\NagiosFilesystem;
 use App\Service\Nagios\NagiosInterface;
 use App\Service\Settings;
 use App\Service\SettingsInterface;
@@ -240,10 +241,10 @@ $container[FileSystemInterface::class] = static function (SettingsInterface $set
  *
  * @param SettingsInterface $settings
  *
- * @return Filesystem
+ * @return NagiosFilesystem
  */
-$container[NagiosInterface::class] = static function (SettingsInterface $settings) {
-    $config = $settings->get(FilesystemInterface::class);
+$container[NagiosFilesystem::class] = static function (SettingsInterface $settings) {
+    $config = $settings->get(NagiosInterface::class);
 
-    return new FileSystem(new Local($config['nagios']));
+    return new NagiosFilesystem(new Local($config['nagios_root']));
 };

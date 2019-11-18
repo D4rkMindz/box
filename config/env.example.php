@@ -1,5 +1,6 @@
 <?php
 
+use App\Service\Nagios\NagiosInterface;
 use GuzzleHttp\ClientInterface;
 
 $env = [];
@@ -20,5 +21,11 @@ $env['twig']['assetCache']['cache_enabled'] = false;
 $env['twig']['autoReload'] = true;
 
 $env[ClientInterface::class]['base_uri'] = 'https://admin.zently.ch';
+
+$env[NagiosInterface::class]['nagios_root'] = '/usr/local/nagios';
+$env[NagiosInterface::class]['config_root'] = 'etc/';
+$env[NagiosInterface::class]['template_root'] = 'templates/';
+$env[NagiosInterface::class]['object_root'] = 'etc/objects/';
+$env[NagiosInterface::class]['main_config'] = 'etc/nagios.cfg';
 
 return $env;
