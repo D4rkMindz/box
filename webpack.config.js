@@ -5,13 +5,24 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+
+const sassLoaders = ['style-loader', 'css-loader', 'sass-loader'];
 
 module.exports = {
   entry: {
     'Layout': './templates/layout.js',
+    'Admin/admin.js': './templates/Admin/admin.js',
   },
   output: {
     path: path.resolve(__dirname, 'public/assets'),
+  },
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      'vue': 'vue/dist/vue.esm.js',
+      '@components': path.resolve(__dirname, 'vue/components/'),
+    }
   },
   performance: {
     maxEntrypointSize: 1024000,
@@ -26,6 +37,17 @@ module.exports = {
           'css-loader',
           'sass-loader',
         ],
+      },
+      {
+        test: /\.vue$/i,
+        loader: 'vue-loader',
+        options: {
+          loaders: {
+            css: `vue-style-loader${sassLoaders.map(e => `!${e}`).join('')}`,
+            scss: `vue-style-loader${sassLoaders.map(e => `!${e}`).join('')}`,
+            sass: `vue-style-loader${sassLoaders.map(e => `!${e}`).join('')}`,
+          }
+        }
       },
     ],
   },
@@ -55,9 +77,10 @@ module.exports = {
     new MiniCssExtractPlugin({
       ignoreOrder: false
     }),
+    new VueLoaderPlugin(),
   ],
   watchOptions: {
     ignored: ['./node_modules/']
   },
-  mode: "development"
+  mode: 'development'
 };

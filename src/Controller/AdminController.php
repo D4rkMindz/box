@@ -59,7 +59,7 @@ class AdminController
                     'img' => 'https://cdn.pixabay.com/photo/2013/07/13/10/17/computer-156948__340.png',
                 ],
             ],
-            'templates' => $templates,
+            'templates' => json_encode($templates),
         ];
 
         return $this->encoder->encode($request, $response, 'Admin/index.html.twig', $data);
