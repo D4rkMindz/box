@@ -16,11 +16,7 @@
         </div>
         <div class="uk-modal-body">
           <p>Please select one from the list below</p>
-          <dl v-for="(template, templateClass) in templates" :key="templateClass"
-              class="uk-description-list uk-description-list-divider dl">
-            <dt>{{ template.name }}</dt>
-            <dd>{{ template.description }}</dd>
-          </dl>
+          <configure-host :templates="templates"/>
         </div>
         <div class="uk-modal-footer uk-text-right">
           <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
@@ -32,6 +28,8 @@
 </template>
 
 <script>
+  import ConfigureHost from "@components/ConfigureHost";
+
   export default {
     name: 'ObjectSelector',
     props: {
@@ -45,16 +43,8 @@
         return JSON.parse(this.objects);
       }
     },
-  }
-</script>
-
-<style lang="scss" scoped>
-  .dl {
-    padding: 15px;
-
-    &:hover {
-      background-color: darken(#fff, 15%);
-      cursor: pointer;
+    components: {
+      ConfigureHost,
     }
   }
-</style>
+</script>
