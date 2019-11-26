@@ -2,6 +2,7 @@
 
 use App\Service\Nagios\Objects\Printer;
 use App\Service\Nagios\Objects\Uplink;
+use App\Service\Nagios\Objects\Website;
 
 $templates = [];
 $templates[Uplink::class] = [
@@ -11,7 +12,7 @@ $templates[Uplink::class] = [
         ['type' => 'HostName', 'value' => ''],
         ['type' => 'Alias', 'value' => ''],
         ['type' => 'Address', 'value' => ''],
-        ['type' => 'CheckInterval', 'value' => 1],
+        ['type' => 'CheckInterval', 'value' => '5'],
     ],
 ];
 $templates[Printer::class] = [
@@ -20,8 +21,17 @@ $templates[Printer::class] = [
     'fields' => [
         ['type' => 'HostName', 'value' => ''],
         ['type' => 'Alias', 'value' => ''],
-        ['type' => 'CheckInterval', 'value' => ''],
+        ['type' => 'CheckInterval', 'value' => '5'],
         ['type' => 'SnmpCommunity', 'value' => 'public'],
+    ],
+];
+$templates[Website::class] = [
+    'name' => __('Website'),
+    'description' => __('This checks if a website is up and reacheable'),
+    'fields' => [
+        ['type' => 'HostName', 'value' => ''],
+        ['type' => 'Domain', 'value' => ''],
+        ['type' => 'CheckInterval', 'value' => '5'],
     ],
 ];
 

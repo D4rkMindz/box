@@ -43,6 +43,7 @@
   import SmbUserName from "@components/Form/SmbUserName";
   import SmbWarningPercent from "@components/Form/SmbWarningPercent";
   import SnmpCommunity from "@components/Form/SnmpCommunity";
+  import Domain from "@components/Form/Domain";
 
   export default {
     name: 'ConfigureHost',
@@ -56,6 +57,7 @@
       Address,
       Alias,
       CheckInterval,
+      Domain,
       HostName,
       SmbCriticalPercent,
       SmbPassword,
@@ -71,9 +73,6 @@
         value: 'some value',
         valid: false,
       }
-    },
-    mounted() {
-      console.log(this.templates);
     },
     methods: {
       close() {
