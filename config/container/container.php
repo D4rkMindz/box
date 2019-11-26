@@ -6,9 +6,14 @@ use App\Service\Settings;
 use App\Service\SettingsInterface;
 use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
+use Dflydev\FigCookies\Modifier\SameSite;
+use Dflydev\FigCookies\SetCookie;
 use Fullpipe\TwigWebpackExtension\WebpackExtension;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
+use Lcobucci\Clock\SystemClock;
+use Lcobucci\JWT\Parser;
+use Lcobucci\JWT\Signer\Rsa\Sha256;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
@@ -75,9 +80,22 @@ $container[ResponseFactoryInterface::class] = static function (App $app) {
  */
 $container[SessionMiddleware::class] = static function (FilesystemInterface $filesystem, SettingsInterface $settings) {
     $config = $settings->get(SessionInterface::class);
-    $key = $filesystem->read($config['key']);
+    $private = $filesystem->read($config['key']);
+    $public = $filesystem->read($config['public']);
 
-    return SessionMiddleware::fromSymmetricKeyDefaults($key, $config['timeout']);
+    return new SessionMiddleware(
+        new Sha256(),
+        $private,
+        $public,
+        SetCookie::create(SessionMiddleware::DEFAULT_COOKIE)
+            ->withSecure(true)
+            ->withHttpOnly(false)
+            ->withSameSite(SameSite::lax())
+            ->withPath('/'),
+        new Parser(),
+        $config['timeout'],
+        new SystemClock()
+    );
 };
 
 /**

@@ -25,7 +25,10 @@
         "psr7-sessions/storageless": "^5.1",
         "fullpipe/twig-webpack-extension": "^2.0",
         "guzzlehttp/guzzle": "~6.0",
-        "indiehd/filename-sanitizer": "^0.1.0"
+        "indiehd/filename-sanitizer": "^0.1.0",
+        "lcobucci/jwt": "~3.1",
+        "lcobucci/clock": "^1.1.0",
+        "dflydev/fig-cookies": "^2.0.0"
     },
     "require-dev": {
         "odan/phinx-migrations-generator": "^2.3",

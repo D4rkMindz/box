@@ -81,6 +81,7 @@ $config[NagiosInterface::class] = [
 
 $config[SessionInterface::class] = [
     'key' => '/config/private.pem', // needs to be generated
+    'public' => '/config/public.pub', // needs to be generated
     'timeout' => 1200, // two hours
 ];
 

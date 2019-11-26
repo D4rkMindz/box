@@ -4,7 +4,7 @@
     "host_name",
     "alias",
     "address",
-    "check_interval",
+    "check_interval"
   ],
   "config": [
     {
