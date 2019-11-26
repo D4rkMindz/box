@@ -5,7 +5,7 @@ namespace App\Service\Nagios\Objects\Config;
 /**
  * Class SMBUsername
  */
-class SMBUsername
+class SMBUsername implements ObjectConfigInterface
 {
     /** @var string */
     private $username;

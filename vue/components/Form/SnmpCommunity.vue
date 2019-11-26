@@ -1,0 +1,43 @@
+<template>
+  <div class="uk-margin">
+    <span class="uk-text-meta">{{ placeholder }}</span>
+    <input class="uk-input"
+           :class="{'uk-form-danger': valid === false,'uk-form-success': valid === true}"
+           type="text"
+           :placeholder="placeholder"
+           v-model="value"
+           @blur="validate()">
+    <span class="uk-label uk-label-danger" v-if="valid === false">Please use a SNMP community (public or defined in the printer settings)</span>
+  </div>
+</template>
+
+<script>
+  import validator from 'validator';
+
+  export default {
+    name: 'SnmpCommunity',
+    props: {
+      value: {
+        type: String,
+        required: true,
+        default: 'public',
+      },
+    },
+    data() {
+      return {
+        placeholder: 'SNMP Community',
+        valid: null,
+      };
+    },
+    methods: {
+      validate() {
+        this.valid = validator.isAlphanumeric(this.value);
+        this.$emit('validated', this.valid);
+      }
+    }
+  };
+</script>
+
+<style scoped>
+
+</style>

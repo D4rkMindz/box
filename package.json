@@ -5,9 +5,10 @@
   "private": true,
   "dependencies": {
     "uikit": "^3.2.3",
+    "validator": "^12.1.0",
     "vue": "^2.5.22",
-    "vuex": "^3.0.1",
-    "vue-router": "^3.0.2"
+    "vue-router": "^3.0.2",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",

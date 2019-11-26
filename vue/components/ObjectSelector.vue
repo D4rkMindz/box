@@ -16,11 +16,10 @@
         </div>
         <div class="uk-modal-body">
           <p>Please select one from the list below</p>
-          <configure-host :templates="templates"/>
+          <configure-host :templates="templates" @close="open()"/>
         </div>
         <div class="uk-modal-footer uk-text-right">
           <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-          <button class="uk-button uk-button-primary" type="button">Save</button>
         </div>
       </div>
     </div>
@@ -28,6 +27,7 @@
 </template>
 
 <script>
+  import UIkit from 'uikit';
   import ConfigureHost from "@components/ConfigureHost";
 
   export default {
@@ -45,6 +45,11 @@
     },
     components: {
       ConfigureHost,
-    }
-  }
+    },
+    methods: {
+      open() {
+        UIkit.modal('#add-host').show();
+      },
+    },
+  };
 </script>

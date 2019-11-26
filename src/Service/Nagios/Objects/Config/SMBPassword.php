@@ -5,7 +5,7 @@ namespace App\Service\Nagios\Objects\Config;
 /**
  * Class SMBPassword
  */
-class SMBPassword
+class SMBPassword implements ObjectConfigInterface
 {
     /** @var string */
     private $password;

@@ -5,7 +5,7 @@ namespace App\Service\Nagios\Objects\Config;
 /**
  * Class SMBShareName
  */
-class SMBShareName
+class SMBShareName implements ObjectConfigInterface
 {
     /** @var string */
     private $shareName;
