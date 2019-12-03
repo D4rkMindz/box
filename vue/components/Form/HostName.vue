@@ -24,7 +24,7 @@
     },
     data() {
       return {
-        placeholder: 'Host name',
+        placeholder: 'Display name',
         valid: null,
       };
     },

@@ -24,7 +24,7 @@
     },
     data() {
       return {
-        placeholder: 'Alias',
+        placeholder: 'Notes',
         valid: null,
       };
     },

@@ -30,7 +30,7 @@
     },
     methods: {
       validate() {
-        this.valid = validator.isIPv4(this.value);
+        this.valid = validator.isIP(this.value);
         this.$emit('validated', this.valid);
       }
     }
