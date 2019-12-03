@@ -20,7 +20,7 @@
       value: {
         type: String,
         required: true,
-        default: 'public',
+        default: '',
       },
     },
     data() {
