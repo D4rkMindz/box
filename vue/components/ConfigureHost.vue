@@ -18,7 +18,7 @@
         <div class="uk-modal-body">
           <p>{{ selectedTemplate.description }}</p>
           <div v-for="(field, key) in selectedTemplate.fields" :key="key">
-              <component :is="field.type" :value="field.value" @validated="field.valid = $event" />
+            <component :is="field.type" v-model="field.value" :valid="field.valid" @validated="field.valid = $event"/>
           </div>
         </div>
         <div class="uk-modal-footer uk-text-right">
@@ -73,6 +73,12 @@
         value: '',
         valid: false,
       }
+    },
+    watch: {
+      selectedTemplate() {
+        console.log('Rerender');
+        this.$forceUpdate();
+      },
     },
     methods: {
       close() {

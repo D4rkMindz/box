@@ -1,12 +1,12 @@
 <template>
   <div class="uk-margin">
     <span class="uk-text-meta">{{ placeholder }}</span>
-    <input class="uk-input"
-           :class="{'uk-form-danger': valid === false,'uk-form-success': valid === true}"
-           type="text"
+    <input :class="{'uk-form-danger': valid === false,'uk-form-success': valid === true}"
            :placeholder="placeholder"
-           v-model="value"
-           @blur="validate()">
+           @blur="validate()"
+           class="uk-input"
+           type="text"
+           v-model="value">
     <span class="uk-label uk-label-danger" v-if="valid === false">Please use valid user domain (eg. WORKGROUP)</span>
   </div>
 </template>
@@ -22,17 +22,22 @@
         required: true,
         default: '',
       },
+      valid: {
+        type: Boolean,
+        required: false,
+        default: null,
+      },
     },
     data() {
       return {
         placeholder: 'SMB User Domain',
-        valid: null,
       };
     },
     methods: {
       validate() {
-        this.valid = validator.isAlphanumeric(this.value);
-        this.$emit('validated', this.valid);
+        const valid = validator.isAlphanumeric(this.value);
+        this.$emit('validated', valid);
+        this.$emit('input', this.value);
       }
     }
   };

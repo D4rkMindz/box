@@ -1,14 +1,14 @@
 <template>
   <div class="uk-margin">
     <span class="uk-text-meta">{{ placeholder }}</span>
-    <input class="uk-range"
-           :class="{'uk-form-danger': valid === false,'uk-form-success': valid === true}"
-           type="range"
-           step="5"
-           :min="min"
+    <input :class="{'uk-form-danger': valid === false,'uk-form-success': valid === true}"
            :max="max"
-           v-model="value"
-           @blur="validate()">
+           :min="min"
+           @blur="validate()"
+           class="uk-range"
+           step="5"
+           type="range"
+           v-model="value">
     {{ value }} %
     <span class="uk-label uk-label-danger" v-if="valid === false">Please dont manipulate the range slider</span>
   </div>
@@ -25,6 +25,11 @@
         required: false,
         default: 95,
       },
+      valid: {
+        type: Boolean,
+        required: false,
+        default: null,
+      },
       min: {
         type: Number,
         default: 0,
@@ -37,13 +42,13 @@
     data() {
       return {
         placeholder: 'SMB Critical Percentage',
-        valid: null,
       };
     },
     methods: {
       validate() {
-        this.valid = validator.isInt(this.value, {min: this.min, max: this.max});
-        this.$emit('validated', this.valid);
+        const valid = validator.isInt(this.value, {min: this.min, max: this.max});
+        this.$emit('validated', valid);
+        this.$emit('input', this.value);
       }
     }
   };
