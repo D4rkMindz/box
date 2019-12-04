@@ -8,7 +8,7 @@
            class="uk-range"
            step="1"
            type="range"
-           v-model="value">
+           v-model="input">
     {{ value }} Min
     <span class="uk-label uk-label-danger" v-if="valid === false">Please dont manipulate the range slider</span>
   </div>
@@ -16,19 +16,12 @@
 
 <script>
   import validator from 'validator';
+  import DefaultInput from "@components/Form/DefaultInput";
 
   export default {
+    extends: DefaultInput,
     name: 'Alias',
     props: {
-      value: {
-        type: String,
-        required: false,
-      },
-      valid: {
-        type: Boolean,
-        required: false,
-        default: null,
-      },
       min: {
         type: Number,
         default: 1,
@@ -45,9 +38,8 @@
     },
     methods: {
       validate() {
-        const valid = validator.isInt(this.value, {min: this.min, max: this.max});
-        this.$emit('validated', valid);
-        this.$emit('input', this.value);
+        const valid = validator.isInt(this.input, {min: this.min, max: this.max});
+        this.emit(valid);
       }
     }
   };

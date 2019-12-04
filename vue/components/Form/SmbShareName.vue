@@ -6,28 +6,18 @@
            @blur="validate()"
            class="uk-input"
            type="text"
-           v-model="value">
+           v-model="input">
     <span class="uk-label uk-label-danger" v-if="valid === false">Please use valid share name</span>
   </div>
 </template>
 
 <script>
   import validator from 'validator';
+  import DefaultInput from "@components/Form/DefaultInput";
 
   export default {
+    extends: DefaultInput,
     name: 'SmbShareName',
-    props: {
-      value: {
-        type: String,
-        required: true,
-        default: '',
-      },
-      valid: {
-        type: Boolean,
-        required: false,
-        default: null,
-      },
-    },
     data() {
       return {
         placeholder: 'SMB Share Name',
@@ -36,9 +26,8 @@
     methods: {
       validate() {
         // from https://stackoverflow.com/questions/29106365/strict-regular-expression-for-shared-network-folder
-        const valid = validator.matches(this.value, /^(\\)(\\[A-Za-z0-9-_]+){2,}(\\?)$/);
-        this.$emit('validated', valid);
-        this.$emit('input', this.value);
+        const valid = validator.matches(this.input, /^(\\)(\\[A-Za-z0-9-_]+){2,}(\\?)$/);
+        this.emit(valid);
       }
     }
   };

@@ -14,7 +14,7 @@ use App\Service\Nagios\Objects\Config\ObjectConfigInterface;
 class Uplink implements ObjectInterface
 {
     /** @var HostName */
-    private $name;
+    private $hostName;
     /** @var Alias */
     private $alias;
     /** @var Address */
@@ -32,10 +32,25 @@ class Uplink implements ObjectInterface
      */
     public function __construct(HostName $name, Alias $alias, Address $address, CheckInterval $checkInterval)
     {
-        $this->name = $name;
+        $this->hostName = $name;
         $this->alias = $alias;
         $this->address = $address;
         $this->checkInterval = $checkInterval;
+    }
+
+    /**
+     * Get all ObjectConfigurations that are required for the object to be created
+     *
+     * @return array That is build like __CLASS__ => ['required' => boolean]
+     */
+    public static function getObjectConfig(): array
+    {
+        return [
+            HostName::class => ['required' => true],
+            Alias::class => ['required' => true],
+            Address::class => ['required' => true],
+            CheckInterval::class => ['required' => true],
+        ];
     }
 
     /**
@@ -43,10 +58,10 @@ class Uplink implements ObjectInterface
      *
      * @return ObjectConfigInterface[]
      */
-    public function getConfig():array
+    public function getConfig(): array
     {
         return [
-            $this->name,
+            $this->hostName,
             $this->alias,
             $this->address,
             $this->checkInterval,

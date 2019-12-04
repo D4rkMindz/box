@@ -10,6 +10,9 @@ config/jwt/*.pem
 !/data/config/*
 /data/config/*
 !/data/config/.gitkeep
+!/data/nagios/*
+/data/nagios/*
+!/data/nagios/.gitkeep
 
 .serverless
 secrets.json

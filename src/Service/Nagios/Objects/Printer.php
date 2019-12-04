@@ -42,6 +42,20 @@ class Printer implements ObjectInterface
         $this->snmpCommunity = $snmpCommunity;
     }
 
+    /**
+     * Get all ObjectConfigurations that are required for the object to be created
+     *
+     * @return array That is build like __CLASS__ => ['required' => boolean]
+     */
+    public static function getObjectConfig(): array
+    {
+        return [
+            HostName::class => ['required' => true],
+            Alias::class => ['required' => true],
+            CheckInterval::class => ['required' => true],
+            SNMPCommunity::class => ['required' => true],
+        ];
+    }
 
     /**
      * Get all configurations of an object.

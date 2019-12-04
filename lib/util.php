@@ -43,30 +43,6 @@ function array_value(string $key, ?array $array)
 }
 
 /**
- * Make an array multidimensional based on the given keys.
- *
- * @param array|mixed $keys
- * @param             $resultValue
- *
- * @return array
- */
-function array_make_multidimensional($keys, $resultValue)
-{
-    if (!is_array($keys)) {
-        return $resultValue;
-    }
-    $tmp = [];
-    $index = array_shift($keys);
-    if (!isset($keys[0])) {
-        $tmp[$index] = $resultValue;
-    } else {
-        $tmp[$index] = array_make_multidimensional($keys, $resultValue);
-    }
-
-    return $tmp;
-}
-
-/**
  * Convert a datetime to ISO 8601
  *
  * @param DateTime $time
@@ -119,4 +95,43 @@ function rrmdir($dir)
         reset($objects);
         rmdir($dir);
     }
+}
+
+/**
+ * Get a class name without the namespace
+ *
+ * @param string $class
+ *
+ * @return string
+ */
+function class_name(string $class): string {
+    $path = explode('\\', $class);
+    return array_pop($path);
+}
+
+/**
+ * Get only the namespace of a class
+ *
+ * @param string $class
+ *
+ * @return string
+ */
+function class_basename(string $class): string {
+    return join(array_slice(explode('\\', $class), 0, -1), '\\');
+}
+
+/**
+ * Convert an input to snake_case
+ *
+ * @param string $input
+ *
+ * @return string
+ */
+function to_snake_case(string $input) {
+    preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+    $ret = $matches[0];
+    foreach ($ret as &$match) {
+        $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
+    }
+    return implode('_', $ret);
 }

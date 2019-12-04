@@ -6,27 +6,18 @@
            @blur="validate()"
            class="uk-input"
            type="text"
-           v-model="value">
+           v-model="input">
     <span class="uk-label uk-label-danger" v-if="valid === false">Please use a valid Website address</span>
   </div>
 </template>
 
 <script>
   import validator from 'validator';
+  import DefaultInput from "@components/Form/DefaultInput";
 
   export default {
+    extends: DefaultInput,
     name: 'Domain',
-    props: {
-      value: {
-        type: String,
-        required: true,
-      },
-      valid: {
-        type: Boolean,
-        required: false,
-        default: null,
-      },
-    },
     data() {
       return {
         placeholder: 'Website Domain',
@@ -34,9 +25,8 @@
     },
     methods: {
       validate() {
-        const valid = validator.isURL(this.value);
-        this.$emit('validated', valid);
-        this.$emit('input', this.value);
+        const valid = validator.isURL(this.input);
+        this.emit(valid);
       }
     }
   };

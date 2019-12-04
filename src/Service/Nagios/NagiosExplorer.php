@@ -5,6 +5,9 @@ namespace App\Service\Nagios;
 use App\Service\Nagios\Exception\TemplateAlreadyExistsException;
 use App\Service\Nagios\Objects\ObjectInterface;
 use App\Service\SettingsInterface;
+use App\Service\UUID\UUID;
+use App\Service\Validation\ObjectValidation;
+use App\Util\ArrayReader;
 use IndieHD\FilenameSanitizer\FilenameSanitizer;
 use League\Flysystem\FilesystemInterface;
 
@@ -19,21 +22,36 @@ class NagiosExplorer
     private $filesystem;
     /** @var FilesystemInterface */
     private $dataFilesystem;
+    /** @var ObjectValidation */
+    private $objectValidation;
+    /** @var ObjectInstantiator */
+    private $instantiator;
+    /** @var NagiosTemplateRenderer */
+    private $renderer;
 
     /**
      * NagiosExplorer constructor.
      *
-     * @param NagiosFilesystem    $filesystem
-     * @param FilesystemInterface $dataFilesystem
-     * @param SettingsInterface   $settings
+     * @param NagiosFilesystem       $filesystem
+     * @param FilesystemInterface    $dataFilesystem
+     * @param ObjectValidation       $objectValidation
+     * @param ObjectInstantiator     $instantiator
+     * @param NagiosTemplateRenderer $renderer
+     * @param SettingsInterface      $settings
      */
     public function __construct(
         NagiosFilesystem $filesystem,
         FilesystemInterface $dataFilesystem,
+        ObjectValidation $objectValidation,
+        ObjectInstantiator $instantiator,
+        NagiosTemplateRenderer $renderer,
         SettingsInterface $settings
     ) {
         $this->config = $settings->get(NagiosInterface::class);
         $this->filesystem = $filesystem;
+        $this->objectValidation = $objectValidation;
+        $this->instantiator = $instantiator;
+        $this->renderer = $renderer;
         $this->dataFilesystem = $dataFilesystem;
     }
 
@@ -47,7 +65,7 @@ class NagiosExplorer
      */
     public function createTemplate(string $name, string $content = ''): bool
     {
-        $templateName = $this->config['template_root'] . $this->sanitizeFilename($name) . '.cfg';
+        $templateName = $this->config['template_root'] . $this->sanitizeFilename($name) . '.template';
         if ($this->dataFilesystem->has($templateName)) {
             throw new TemplateAlreadyExistsException();
         }
@@ -80,5 +98,26 @@ class NagiosExplorer
             ->stripRiskyCharacters()
             ->stripIllegalFilesystemCharacters()
             ->getFilename();
+    }
+
+    /**
+     * Create a nagios object
+     *
+     * @param string      $class
+     * @param ArrayReader $fields
+     *
+     * @return ObjectInterface
+     */
+    public function createObject(string $class, ArrayReader $fields): ObjectInterface
+    {
+        $this->objectValidation->validateCreation($class, $fields);
+        $object = $this->instantiator->instantiate($class, $fields);
+
+        $template = $this->config['template_root'] . $object->getTemplateName();
+        $content = $this->renderer->render($template, $object);
+        $path = $this->config['object_root'] . UUID::generate() . '.cfg';
+        $this->filesystem->write($path, $content);
+
+        return $object;
     }
 }

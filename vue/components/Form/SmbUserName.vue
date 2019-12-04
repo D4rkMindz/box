@@ -6,28 +6,18 @@
            @blur="validate()"
            class="uk-input"
            type="text"
-           v-model="value">
+           v-model="input">
     <span class="uk-label uk-label-danger" v-if="valid === false">Please use a valid username</span>
   </div>
 </template>
 
 <script>
   import validator from 'validator';
+  import DefaultInput from "@components/Form/DefaultInput";
 
   export default {
+    extends: DefaultInput,
     name: 'SmbUserName',
-    props: {
-      value: {
-        type: String,
-        required: true,
-        default: '',
-      },
-      valid: {
-        type: Boolean,
-        required: false,
-        default: null,
-      },
-    },
     data() {
       return {
         placeholder: 'SMB username',
@@ -35,9 +25,8 @@
     },
     methods: {
       validate() {
-        const valid = validator.matches(this.value, /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/);
-        this.$emit('validated', valid);
-        this.$emit('input', this.value);
+        const valid = validator.matches(this.input, /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/);
+        this.emit(valid);
       }
     }
   };

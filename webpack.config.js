@@ -22,6 +22,7 @@ module.exports = {
     alias: {
       'vue': 'vue/dist/vue.esm.js',
       '@components': path.resolve(__dirname, 'vue/components/'),
+      '@axios': path.resolve(__dirname, 'vue/axios.dev.js'),
     }
   },
   performance: {

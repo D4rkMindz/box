@@ -6,28 +6,18 @@
            @blur="validate()"
            class="uk-input"
            type="text"
-           v-model="value">
+           v-model="input">
     <span class="uk-label uk-label-danger" v-if="valid === false">Please use valid user domain (eg. WORKGROUP)</span>
   </div>
 </template>
 
 <script>
   import validator from 'validator';
+  import DefaultInput from "@components/Form/DefaultInput";
 
   export default {
     name: 'SmbUserDomain',
-    props: {
-      value: {
-        type: String,
-        required: true,
-        default: '',
-      },
-      valid: {
-        type: Boolean,
-        required: false,
-        default: null,
-      },
-    },
+    extends: DefaultInput,
     data() {
       return {
         placeholder: 'SMB User Domain',
@@ -35,9 +25,8 @@
     },
     methods: {
       validate() {
-        const valid = validator.isAlphanumeric(this.value);
-        this.$emit('validated', valid);
-        this.$emit('input', this.value);
+        const valid = validator.isAlphanumeric(this.input);
+        this.emit(valid);
       }
     }
   };

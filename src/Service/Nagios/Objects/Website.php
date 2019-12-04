@@ -33,6 +33,19 @@ class Website implements ObjectInterface
         $this->checkInterval = $checkInterval;
     }
 
+    /**
+     * Get all ObjectConfigurations that are required for the object to be created
+     *
+     * @return array That is build like __CLASS__ => ['required' => boolean]
+     */
+    public static function getObjectConfig(): array
+    {
+        return [
+            HostName::class => ['required' => true],
+            Domain::class => ['required' => true],
+            CheckInterval::class => ['required' => true],
+        ];
+    }
 
     /**
      * Get all configurations of an object.

@@ -6,27 +6,18 @@
            @blur="validate()"
            class="uk-input"
            type="text"
-           v-model="value">
+           v-model="input">
     <span class="uk-label uk-label-danger" v-if="valid === false">Please use a valid IPv4 address</span>
   </div>
 </template>
 
 <script>
   import validator from 'validator';
+  import DefaultInput from "@components/Form/DefaultInput";
 
   export default {
+    extends: DefaultInput,
     name: 'Address',
-    props: {
-      value: {
-        type: String,
-        required: true,
-      },
-      valid: {
-        type: Boolean,
-        required: false,
-        default: null,
-      },
-    },
     data() {
       return {
         placeholder: 'IP Address',
@@ -34,9 +25,8 @@
     },
     methods: {
       validate() {
-        const valid = validator.isIP(this.value);
-        this.$emit('validated', valid);
-        this.$emit('input', this.value);
+        const valid = validator.isIP(this.input);
+        this.emit(valid);
       }
     }
   };

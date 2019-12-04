@@ -10,6 +10,13 @@ use App\Service\Nagios\Objects\Config\ObjectConfigInterface;
 interface ObjectInterface
 {
     /**
+     * Get all ObjectConfigurations that are required for the object to be created
+     *
+     * @return array That is build like __CLASS__ => ['required' => boolean]
+     */
+    public static function getObjectConfig(): array;
+
+    /**
      * Get all configurations of an object.
      *
      * @return ObjectConfigInterface[]

@@ -23,7 +23,7 @@
         </div>
         <div class="uk-modal-footer uk-text-right">
           <button class="uk-button uk-button-default" @click="close()" type="button">Cancel</button>
-          <button class="uk-button uk-button-primary" type="button">Save</button>
+          <button class="uk-button uk-button-primary" @click="save()" type="button">Save</button>
         </div>
       </div>
     </div>
@@ -44,12 +44,13 @@
   import SmbWarningPercent from "@components/Form/SmbWarningPercent";
   import SnmpCommunity from "@components/Form/SnmpCommunity";
   import Domain from "@components/Form/Domain";
+  import axios from '@axios';
 
   export default {
     name: 'ConfigureHost',
     props: {
       templates: {
-        type: Object,
+        type: Array,
         required: true,
       }
     },
@@ -74,16 +75,35 @@
         valid: false,
       }
     },
-    watch: {
-      selectedTemplate() {
-        console.log('Rerender');
-        this.$forceUpdate();
-      },
-    },
     methods: {
+      async save() {
+        debugger;
+        if (!this.selectedTemplate) {
+          return;
+        }
+        let valid = true;
+        Object.keys(this.selectedTemplate.fields).forEach((name) => {
+          if (this.selectedTemplate.fields[name]['valid'] === false) {
+            valid = false;
+          }
+        });
+        if (!valid) {
+          return;
+        }
+        const response = await axios.post('/objects', this.selectedTemplate);
+        if (response.data.success) {
+          this.clear();
+          // TODO reload configured monitoring objects after saving (load them dynamically, not prerendered)
+          // TODO inform the user that the object was added
+        }
+        // TODO display the errors
+      },
       close() {
         this.$emit('close');
-        UIkit.modal('#add-host').hide();
+        UIkit.modal('#configure-host').hide();
+      },
+      clear() {
+        UIkit.modal('#configure-host').hide();
       }
     },
   }
