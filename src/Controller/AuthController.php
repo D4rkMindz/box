@@ -85,7 +85,14 @@ class AuthController
 
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
         $session->set(SessionKey::AUTHENTICATED, true);
-        $session->set(SessionKey::TOKENS, $tokens);
+        $session->set(SessionKey::JWT, $tokens['token']);
+        $session->set(SessionKey::REFRESH_TOKEN, $tokens['refresh']);
+        [$header, $payload, $signature] = explode('.', $tokens['token']);
+        $decoded = [
+            'header' => json_decode(base64_decode($header, true)),
+            'payload' => json_decode(base64_decode($payload), true),
+        ];
+        $session->set(SessionKey::JWT_DECODED, $decoded);
 
         return $this->redirect->encode($response, '/admin');
     }

@@ -21,6 +21,7 @@ $env['twig']['assetCache']['cache_enabled'] = false;
 $env['twig']['autoReload'] = true;
 
 $env[ClientInterface::class]['base_uri'] = 'https://admin.zently.ch';
+$env[ClientInterface::class]['api_uri'] = '/api';
 
 $env[NagiosInterface::class]['nagios_root'] = '/usr/local/nagios';
 $env[NagiosInterface::class]['config_root'] = 'etc/';

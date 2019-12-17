@@ -4,7 +4,6 @@ namespace App\Service\API;
 
 use App\Exception\AuthenticationException;
 use App\Type\HttpCode;
-use App\Util\ArrayReader;
 
 /**
  * Class APIAuthService
@@ -43,14 +42,13 @@ class APIAuthService
             throw new AuthenticationException(HttpCode::UNAUTHORIZED, __('Username or password invalid'));
         }
 
-        $json = $response->getBody()->getContents();
-        $data = new ArrayReader(json_decode($json, true));
-        $token = $data->findString('access_token');
-        $refreshToken = $data->findString('refresh_token');
+        $content = $response->getContent();
+        $token = $content->findString('access_token');
+        $refreshToken = $content->findString('refresh_token');
 
         return [
             'token' => $token,
-            'refresh' => $refreshToken
+            'refresh' => $refreshToken,
         ];
     }
 }

@@ -77,7 +77,6 @@
     },
     methods: {
       async save() {
-        debugger;
         if (!this.selectedTemplate) {
           return;
         }

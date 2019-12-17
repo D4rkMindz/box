@@ -104,13 +104,15 @@ class NagiosExplorer
      * Create a nagios object
      *
      * @param string      $class
+     * @param int         $companyId
+     * @param int         $boxId
      * @param ArrayReader $fields
      *
      * @return ObjectInterface
      */
-    public function createObject(string $class, ArrayReader $fields): ObjectInterface
+    public function createObject(string $class, int $companyId, int $boxId, ArrayReader $fields): ObjectInterface
     {
-        $this->objectValidation->validateCreation($class, $fields);
+        $this->objectValidation->validateCreation($class, $companyId, $boxId, $fields);
         $object = $this->instantiator->instantiate($class, $fields);
 
         $template = $this->config['template_root'] . $object->getTemplateName();

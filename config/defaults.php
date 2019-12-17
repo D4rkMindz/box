@@ -29,6 +29,7 @@ $config[Translator::class] = [
 
 $config[ClientInterface::class] = [
     'base_uri' => 'https://api.example.com',
+    'api_uri' => '/api',
 ];
 
 $config['twig'] = [

@@ -2,6 +2,7 @@
 
 namespace App\Service\Validation;
 
+use App\Service\API\APIObjectService;
 use App\Service\Nagios\Objects\ObjectInterface;
 use App\Util\ArrayReader;
 use App\Util\ValidationResult;
@@ -11,20 +12,34 @@ use App\Util\ValidationResult;
  */
 class ObjectValidation extends AppValidation
 {
-    public function __construct()
+    /** @var APIObjectService */
+    private $api;
+
+    /**
+     * ObjectValidation constructor.
+     *
+     * @param APIObjectService $api
+     */
+    public function __construct(APIObjectService $api)
     {
+        $this->api = $api;
     }
 
     /**
+     * Validate the creation of a box
+     *
      * @param string      $class The class without the namespace
+     * @param int         $companyId
+     * @param int         $boxId
      * @param ArrayReader $fields
      */
-    public function validateCreation(string $class, ArrayReader $fields)
+    public function validateCreation(string $class, int $companyId, int $boxId, ArrayReader $fields)
     {
         $class = class_basename(ObjectInterface::class) . '\\' . $class;
 
         $validationResult = new ValidationResult(__('Please check your data'));
         $this->validateClass($class, $validationResult);
+        $this->validateIfCreationIsAllowed($companyId, $boxId, $validationResult);
         $this->validateFields($class, $fields, $validationResult);
 
         $this->throwOnError($validationResult);
@@ -57,6 +72,21 @@ class ObjectValidation extends AppValidation
             if ($objectConfiguration['required'] && $fields->exists(class_name($objectConfigurationClass)) === false) {
                 $validationResult->setError('form', __('Please ensure that all required fields are filled in'));
             }
+        }
+    }
+
+    /**
+     * Check if another creation is allowed
+     *
+     * @param int              $companyId
+     * @param int              $boxId
+     * @param ValidationResult $validationResult
+     */
+    private function validateIfCreationIsAllowed(int $companyId, int $boxId, ValidationResult $validationResult)
+    {
+        if (!$this->api->canCreate($companyId, $boxId)) {
+            $validationResult->setError('quota',
+                __('Your object quota exceeded. Please choose a higher subscription plan.'));
         }
     }
 }
