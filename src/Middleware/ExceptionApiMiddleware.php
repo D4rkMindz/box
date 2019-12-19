@@ -153,6 +153,6 @@ class ExceptionApiMiddleware implements MiddlewareInterface
         $data['success'] = isset($data['success']) ? $data['success'] : $status === 200;
         $data['status'] = $response->getStatusCode();
 
-        return $this->encoder->encode($response, $data);
+        return $this->encoder->encode($response, $data, $status);
     }
 }
