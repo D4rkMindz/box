@@ -2,6 +2,7 @@
 
 namespace App\Service\Nagios;
 
+use App\Service\Nagios\Objects\Config\HostName;
 use App\Service\Nagios\Objects\ObjectInterface;
 use App\Util\ArrayReader;
 use InvalidArgumentException;

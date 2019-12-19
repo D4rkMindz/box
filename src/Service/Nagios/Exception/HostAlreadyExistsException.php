@@ -7,10 +7,10 @@ use InvalidArgumentException;
 /**
  * Class TemplateAlreadyExistsException
  */
-class TemplateAlreadyExistsException extends InvalidArgumentException
+class HostAlreadyExistsException extends InvalidArgumentException
 {
     public function __construct()
     {
-        parent::__construct(__('The template already exists'));
+        parent::__construct(__('The host already exists'));
     }
 }

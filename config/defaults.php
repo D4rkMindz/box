@@ -75,6 +75,7 @@ $config[FilesystemInterface::class] = [
 $config[NagiosInterface::class] = [
     'nagios_root' => '/usr/local/nagios',
     'config_root' => 'etc/',
+    'host_root' => 'hosts/',
     'template_root' => 'templates/',
     'object_root' => 'etc/objects/',
     'main_config' => 'etc/nagios.cfg',

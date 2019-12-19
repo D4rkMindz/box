@@ -5,12 +5,12 @@ namespace App\Service\Nagios\Exception;
 use InvalidArgumentException;
 
 /**
- * Class TemplateAlreadyExistsException
+ * Class HostNotSavedException
  */
-class HostAlreadyExistsException extends InvalidArgumentException
+class HostNotSavedException extends InvalidArgumentException
 {
     public function __construct()
     {
-        parent::__construct(__('The host already exists'));
+        parent::__construct(__('The host could not be saved. Please try again'));
     }
 }

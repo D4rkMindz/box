@@ -5,6 +5,7 @@ namespace App\Controller\API;
 use App\Exception\ValidationException;
 use App\Service\Encoder\JSONEncoder;
 use App\Service\Nagios\NagiosExplorer;
+use App\Service\Nagios\ObjectService;
 use App\Type\SessionKey;
 use App\Util\ArrayReader;
 use App\Util\ValidationResult;
@@ -27,19 +28,21 @@ class ObjectController
     private $logger;
     /** @var NagiosExplorer */
     private $nagios;
+    /** @var ObjectService */
+    private $object;
 
     /**
      * ObjectController constructor.
      *
      * @param JSONEncoder     $json
      * @param LoggerInterface $logger
-     * @param NagiosExplorer  $nagiosExplorer
+     * @param ObjectService   $objectService
      */
-    public function __construct(JSONEncoder $json, LoggerInterface $logger, NagiosExplorer $nagiosExplorer)
+    public function __construct(JSONEncoder $json, LoggerInterface $logger, ObjectService $objectService)
     {
         $this->json = $json;
         $this->logger = $logger;
-        $this->nagios = $nagiosExplorer;
+        $this->object = $objectService;
     }
 
 
@@ -67,7 +70,7 @@ class ObjectController
         $boxId = 1;
         $companyId = $token['payload']['data']['company_id'];
 
-        $this->nagios->createObject($class, $companyId, $boxId, $fields);
+        $this->object->saveObject($class, $companyId, $boxId, $fields);
 
         return $this->json->encode($response, ['success' => true]);
     }
