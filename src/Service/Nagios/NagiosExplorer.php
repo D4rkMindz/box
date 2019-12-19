@@ -131,7 +131,7 @@ class NagiosExplorer
             if(strpos($value,'.host') !== false){
                 $hosts[] = $value;
             }
-
-    }
+        }
+        return $hosts;
     }
 }

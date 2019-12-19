@@ -32,6 +32,7 @@ class AdminController
     {
         $templates = $this->nagiosExplorer->listTemplates();
         //TODO: Read .host file from data/hosts
+        $host[]= $this->nagiosExplorer->readHostFiles();
 
         $data = [
             'hosts' => [
