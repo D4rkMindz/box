@@ -31,6 +31,7 @@ class AdminController
     public function indexAction(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $templates = $this->nagiosExplorer->listTemplates();
+        //TODO: Read .host file from data/hosts
         $data = [
             'hosts' => [
                 [
