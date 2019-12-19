@@ -1,4 +1,5 @@
 {
+  "name" : "Webserver 1",
   "type": "ONLINE_CHECK",
   "required": [
     "host_name",
