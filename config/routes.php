@@ -4,7 +4,7 @@ use App\Middleware\AuthMiddleware;
 use App\Middleware\ExceptionApiMiddleware;
 use App\Middleware\ExceptionMiddleware;
 use App\Middleware\LanguageMiddleware;
-use PSR7Sessions\Storageless\Http\SessionMiddleware;
+use App\Middleware\SessionMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 

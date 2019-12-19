@@ -33,7 +33,7 @@ class APIAuthService
      */
     public function login(string $username, string $password): array
     {
-        $response = $this->api->post('/api/tokens', [
+        $response = $this->api->post('/tokens', [
             'username' => $username,
             'password' => $password,
         ]);
@@ -43,8 +43,12 @@ class APIAuthService
         }
 
         $content = $response->getContent();
-        $token = $content->findString('access_token');
-        $refreshToken = $content->findString('refresh_token');
+        if ($content->exists('error')) {
+            throw new AuthenticationException(HttpCode::UNAUTHORIZED, __('Username or password invalid'));
+        }
+
+        $token = $content->getString('access_token');
+        $refreshToken = $content->getString('refresh_token');
 
         return [
             'token' => $token,
