@@ -122,4 +122,16 @@ class NagiosExplorer
 
         return $object;
     }
+
+    public function readHostFiles()
+    {
+        $hosts = [ ];
+        $array = scandir(__DIR__ . '/../../../data/hosts/');
+        foreach ($array as $value){
+            if(strpos($value,'.host') !== false){
+                $hosts[] = $value;
+            }
+
+    }
+    }
 }
