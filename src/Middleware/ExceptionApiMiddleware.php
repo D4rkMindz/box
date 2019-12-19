@@ -8,6 +8,7 @@ use App\Exception\ValidationException;
 use App\Service\Encoder\JSONEncoder;
 use App\Type\HttpCode;
 use Exception;
+use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -55,6 +56,8 @@ class ExceptionApiMiddleware implements MiddlewareInterface
             return $this->handleRecordNotFoundException($exception);
         } catch (AuthenticationException $exception) {
             return $this->handleAuthenticationException($exception);
+        } catch (ClientException $exception) {
+            return $this->handleGuzzleClientException($exception);
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
@@ -119,6 +122,31 @@ class ExceptionApiMiddleware implements MiddlewareInterface
     }
 
     /**
+     * Handle a client error.
+     *
+     * @param ClientException $exception
+     *
+     * @return ResponseInterface
+     */
+    private function handleGuzzleClientException(ClientException $exception)
+    {
+        $statusCode = HttpCode::INTERNAL_SERVER_ERROR;
+        $message = __('The Zently Server stuttered. Please try again');
+        if ($statusCode === HttpCode::UNAUTHORIZED) {
+            $message = __('Your session expired');
+            $statusCode = HttpCode::UNAUTHORIZED;
+        }
+
+        $data = [
+            'status' => $statusCode,
+            'message' => $message,
+            'success' => false,
+        ];
+
+        return $this->sendMetaData($data, $statusCode);
+    }
+
+    /**
      * Handle exception.
      *
      * @param Exception $exception
@@ -153,6 +181,6 @@ class ExceptionApiMiddleware implements MiddlewareInterface
         $data['success'] = isset($data['success']) ? $data['success'] : $status === 200;
         $data['status'] = $response->getStatusCode();
 
-        return $this->encoder->encode($response, $data);
+        return $this->encoder->encode($response, $data, $status);
     }
 }

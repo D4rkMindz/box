@@ -3,21 +3,21 @@
 namespace App\Service\Nagios\Objects\Config;
 
 /**
- * Class HostName
+ * Class Name
  */
-class Domain implements ObjectConfigInterface
+class Name implements ObjectConfigInterface
 {
     /** @var string */
-    private $domain;
+    private $name;
 
     /**
-     * HostName constructor.
+     * Name constructor.
      *
-     * @param string $domain
+     * @param string $name
      */
-    public function __construct(string $domain)
+    public function __construct(string $name)
     {
-        $this->domain = $domain;
+        $this->name = $name;
     }
 
     /**
@@ -27,7 +27,7 @@ class Domain implements ObjectConfigInterface
      */
     public function getValue(): string
     {
-        return $this->domain;
+        return $this->name;
     }
 
     /**
@@ -39,6 +39,6 @@ class Domain implements ObjectConfigInterface
      */
     public static function getTemplateVariableName(): string
     {
-        return 'domain';
+        return 'name';
     }
 }

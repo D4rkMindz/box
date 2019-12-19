@@ -13,6 +13,10 @@ config/jwt/*.pem
 !/data/nagios/*
 /data/nagios/*
 !/data/nagios/.gitkeep
+!/data/hosts/*
+/data/hosts/*
+!/data/hosts/.gitkeep
+!/data/hosts/example.host
 
 .serverless
 secrets.json

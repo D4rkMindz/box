@@ -5,6 +5,7 @@ namespace App\Service\Nagios\Objects;
 use App\Service\Nagios\Objects\Config\Alias;
 use App\Service\Nagios\Objects\Config\CheckInterval;
 use App\Service\Nagios\Objects\Config\HostName;
+use App\Service\Nagios\Objects\Config\Name;
 use App\Service\Nagios\Objects\Config\ObjectConfigInterface;
 use App\Service\Nagios\Objects\Config\SNMPCommunity;
 
@@ -13,6 +14,8 @@ use App\Service\Nagios\Objects\Config\SNMPCommunity;
  */
 class Printer implements ObjectInterface
 {
+    /** @var Name */
+    private $name;
     /** @var HostName */
     private $hostname;
     /** @var Alias */
@@ -25,8 +28,8 @@ class Printer implements ObjectInterface
     /**
      * Printer constructor.
      *
-     * @param HostName $hostname
-     * @param Alias $alias
+     * @param HostName      $hostname
+     * @param Alias         $alias
      * @param CheckInterval $checkInterval
      * @param SNMPCommunity $snmpCommunity
      */
@@ -36,6 +39,7 @@ class Printer implements ObjectInterface
         CheckInterval $checkInterval,
         SNMPCommunity $snmpCommunity
     ) {
+        $this->name = new Name($hostname->getValue());
         $this->hostname = $hostname;
         $this->alias = $alias;
         $this->checkInterval = $checkInterval;
@@ -55,6 +59,16 @@ class Printer implements ObjectInterface
             CheckInterval::class => ['required' => true],
             SNMPCommunity::class => ['required' => true],
         ];
+    }
+
+    /**
+     * Get the name of the uplink
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name->getValue();
     }
 
     /**

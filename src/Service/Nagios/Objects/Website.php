@@ -5,6 +5,7 @@ namespace App\Service\Nagios\Objects;
 use App\Service\Nagios\Objects\Config\CheckInterval;
 use App\Service\Nagios\Objects\Config\Domain;
 use App\Service\Nagios\Objects\Config\HostName;
+use App\Service\Nagios\Objects\Config\Name;
 use App\Service\Nagios\Objects\Config\ObjectConfigInterface;
 
 /**
@@ -12,6 +13,8 @@ use App\Service\Nagios\Objects\Config\ObjectConfigInterface;
  */
 class Website implements ObjectInterface
 {
+    /** @var Name */
+    private $name;
     /** @var HostName */
     private $hostName;
     /** @var Domain */
@@ -22,13 +25,14 @@ class Website implements ObjectInterface
     /**
      * Website constructor.
      *
-     * @param HostName      $hostName
+     * @param HostName      $hostname
      * @param Domain        $domain
      * @param CheckInterval $checkInterval
      */
-    public function __construct(HostName $hostName, Domain $domain, CheckInterval $checkInterval)
+    public function __construct(HostName $hostname, Domain $domain, CheckInterval $checkInterval)
     {
-        $this->hostName = $hostName;
+        $this->name = new Name($hostname->getValue());
+        $this->hostName = $hostname;
         $this->domain = $domain;
         $this->checkInterval = $checkInterval;
     }
@@ -45,6 +49,16 @@ class Website implements ObjectInterface
             Domain::class => ['required' => true],
             CheckInterval::class => ['required' => true],
         ];
+    }
+
+    /**
+     * Get the name of the website
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name->getValue();
     }
 
     /**

@@ -37,7 +37,7 @@ class SMBShareName implements ObjectConfigInterface
      *
      * @return string
      */
-    public function getTemplateVariableName(): string
+    public static function getTemplateVariableName(): string
     {
         return 'smb_share_name';
     }

@@ -29,4 +29,13 @@ interface ObjectInterface
      * @return string
      */
     public function getTemplateName(): string;
+
+    /**
+     * Get the name of an object
+     *
+     * This is the name that is used in the frontend for the user to uniquely identify the object (e.g. "Web server 1")
+     *
+     * @return string
+     */
+    public function getName(): string;
 }
