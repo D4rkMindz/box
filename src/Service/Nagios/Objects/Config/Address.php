@@ -37,7 +37,7 @@ class Address implements ObjectConfigInterface
      *
      * @return string
      */
-    public function getTemplateVariableName(): string
+    public static function getTemplateVariableName(): string
     {
         return 'address';
     }

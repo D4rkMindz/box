@@ -36,7 +36,7 @@ class NagiosTemplateRenderer
         $content = $this->filesystem->read($templateFile);
         $config = $object->getConfig();
         foreach ($config as $configObject) {
-            $variableName = $configObject->getTemplateVariableName();
+            $variableName = $configObject::getTemplateVariableName();
             $content = str_replace(sprintf('{{ %s }}', $variableName), $configObject->getValue(), $content);
         }
 
