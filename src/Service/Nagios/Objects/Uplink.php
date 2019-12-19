@@ -6,6 +6,7 @@ use App\Service\Nagios\Objects\Config\Address;
 use App\Service\Nagios\Objects\Config\Alias;
 use App\Service\Nagios\Objects\Config\CheckInterval;
 use App\Service\Nagios\Objects\Config\HostName;
+use App\Service\Nagios\Objects\Config\Name;
 use App\Service\Nagios\Objects\Config\ObjectConfigInterface;
 
 /**
@@ -13,6 +14,8 @@ use App\Service\Nagios\Objects\Config\ObjectConfigInterface;
  */
 class Uplink implements ObjectInterface
 {
+    /** @var Name */
+    private $name;
     /** @var HostName */
     private $hostName;
     /** @var Alias */
@@ -25,14 +28,19 @@ class Uplink implements ObjectInterface
     /**
      * Uplink constructor.
      *
-     * @param HostName      $name
+     * @param HostName      $hostname
      * @param Alias         $alias
      * @param Address       $address
      * @param CheckInterval $checkInterval
      */
-    public function __construct(HostName $name, Alias $alias, Address $address, CheckInterval $checkInterval)
-    {
-        $this->hostName = $name;
+    public function __construct(
+        HostName $hostname,
+        Alias $alias,
+        Address $address,
+        CheckInterval $checkInterval
+    ) {
+        $this->name = new Name($hostname->getValue());
+        $this->hostName = $hostname;
         $this->alias = $alias;
         $this->address = $address;
         $this->checkInterval = $checkInterval;
@@ -51,6 +59,16 @@ class Uplink implements ObjectInterface
             Address::class => ['required' => true],
             CheckInterval::class => ['required' => true],
         ];
+    }
+
+    /**
+     * Get the name of the uplink
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name->getValue();
     }
 
     /**

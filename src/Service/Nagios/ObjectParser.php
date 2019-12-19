@@ -3,9 +3,9 @@
 namespace App\Service\Nagios;
 
 /**
- * Class HostService
+ * Class ObjectParser
  */
-class HostService
+class ObjectParser
 {
 
 }
