@@ -1,10 +1,8 @@
-# Venovum Application
+# Box Application
 
-[![Build Status](https://travis-ci.com/D4rkMindz/officum.svg?token=3Dr3iNfmuD1aoEZYVhpv&branch=master)](https://travis-ci.com/D4rkMindz/officum)
+## What is Box?
 
-## What is Venovum?
-
-Venovum is an application that lets you earn money by watching advertisements.
+Box is an application that lets you earn money by watching advertisements.
 Those advertisements are distributed by ad managers who upload the advertisements.
 
 ## Installation
@@ -27,9 +25,9 @@ You need following tools installed:
 First clone the repository to local.
 
 ```bash
-$ git clone git@github.com:d4rkmindz/venovum.git
+$ git clone git@github.com:d4rkmindz/Box.git
 # or use HTTPS
-$ git clone https://github.com/d4rkmindz/venovum.git
+$ git clone https://github.com/d4rkmindz/Box.git
 ```
 
 Then install all dependencies with composer
@@ -38,9 +36,11 @@ Then install all dependencies with composer
 $ composer install
 ```
 
+After that generate following secret keys `data/config/private.pem`, `data/config/public.pub` and a `data/config/update.key` file with  `de2e9bb4-1210-4db5-ab01-b2b808318721` as content.
+
 #### Using "binaries"
 
-Download the [latest version](https://github.com/d4rkmindz/venovum/releases/latest) zip and extract it into the servers
+Download the [latest version](https://github.com/d4rkmindz/Box/releases/latest) zip and extract it into the servers
 exposed folder.
 Dont forget to install the dependencies with composer
 
@@ -54,37 +54,6 @@ There are usually many environments that your application is installed (you shou
 You have to rename the `config/env.example.php` file to `config/env.php` and  fill in your data.
 If the `config/env.php` file is not found, the application will look for it in the parent directory (most probably the htdocs folder in your xampp environment). If the `env.php` file is not found there, the application will throw an Error.
 You can also define a `APP_ENV` constant (or a `APP_CONFIG` environment variable) and add a `<APP_ENV>.php` file in the `config/` folder to specify public configurations for e.g. your [CI Service](https://en.wikipedia.org/wiki/Continuous_integration) (NOT PASSWORD OR ANY SECRETS)
-
-
-### Install FFMPeg
-
-This application requires [FFMPeg](https://www.ffmpeg.org/download.html) to work properly.
-On Mac, please run the brew receipt to install it.
-
-```bash
-brew install ffmpeg
-```
-
-After that, configure the application to use the brew binaries in `config/env.php`.
-
-```php
-<?php
-use App\Service\FileSystem\FFMpeg;
-
-$config[FFMpeg::class]['ffmpeg'] = '/usr/local/bin/ffmpeg';
-$config[FFMpeg::class]['ffprobe'] = '/usr/local/bin/ffprobe';
-```
-
-Windows is not supported, because the application is developed on Mac and distributed to Linux.
-
-### AMQP
-
-This application uses the AMQP protocol to distribute messages to cloudamqp. The AMQP extension is not required.
-To ensure, that the application is fully functional, you have to install the (per default installed) `bcmath`-lib.
-
-```bash
-sudo apt-get install php7.0-bcmath
-```
 
 ### Database migration
 
@@ -100,17 +69,9 @@ If you want to have some initial data, you can seed you database with following 
 composer seed
 ```
 
-### Emptor
-
-Emptor is a script that runs all AMQP services if a message is received. This is a long running process.
-You can start emptor by running 
-```bash
-php bin/emptor.php
-```
-
 ## Structure
 
-The Venovum Application Template is build on the [MVC Design Pattern](https://de.wikipedia.org/wiki/Model_View_Controller). All source code should be in the `src/` directory.
+The Box Application Template is build on the [MVC Design Pattern](https://de.wikipedia.org/wiki/Model_View_Controller). All source code should be in the `src/` directory.
 
 | Folder            | Content                                                                                                                                |
 | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
