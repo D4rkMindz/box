@@ -28,14 +28,16 @@ class APIAuthService
      *
      * @param string $username
      * @param string $password
+     * @param string $key The update key of the box (is defined in the table box.update_key on the admin server, and also saved on the box)
      *
      * @return array
      */
-    public function login(string $username, string $password): array
+    public function login(string $username, string $password, string $key): array
     {
         $response = $this->api->post('/tokens', [
             'username' => $username,
             'password' => $password,
+            'key' => $key
         ]);
 
         if ($response->getStatusCode() !== HttpCode::OK) {

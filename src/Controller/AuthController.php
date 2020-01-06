@@ -6,8 +6,10 @@ use App\Exception\AuthenticationException;
 use App\Service\Auth\AuthService;
 use App\Service\Encoder\HTMLEncoder;
 use App\Service\Encoder\RedirectEncoder;
+use App\Type\Paths;
 use App\Type\SessionKey;
 use App\Util\ArrayReader;
+use League\Flysystem\FilesystemInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
@@ -26,6 +28,8 @@ class AuthController
     private $redirect;
     /** @var AuthService */
     private $auth;
+    /** @var FilesystemInterface */
+    private $filesystem;
 
     /**
      * IndexController constructor.
@@ -37,11 +41,13 @@ class AuthController
      */
     public function __construct(
         AuthService $auth,
+        FilesystemInterface $filesystem,
         HTMLEncoder $encoder,
         RedirectEncoder $redirect,
         LoggerInterface $logger
     ) {
         $this->auth = $auth;
+        $this->filesystem = $filesystem;
         $this->encoder = $encoder;
         $this->redirect = $redirect;
         $this->logger = $logger;
@@ -69,9 +75,10 @@ class AuthController
         $data = new ArrayReader($request->getParsedBody());
         $username = $data->findString('username');
         $password = $data->findString('password');
+        $key = $this->filesystem->read(Paths::UPDATE_KEY);
 
         try {
-            $tokens = $this->auth->login($username, $password);
+            $tokens = $this->auth->login($username, $password, $key);
         } catch (AuthenticationException $exception) {
             $this->logger->info('Authentication failed for ' . $username . '  because of an invalid username');
 

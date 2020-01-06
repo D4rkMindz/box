@@ -1,6 +1,7 @@
 <?php
 
 use App\Service\Nagios\NagiosInterface;
+use App\Type\Paths;
 use Firebase\JWT\JWT;
 use GuzzleHttp\ClientInterface;
 use League\Flysystem\FilesystemInterface;
@@ -73,7 +74,7 @@ $config[FilesystemInterface::class] = [
 ];
 
 $config[NagiosInterface::class] = [
-    'nagios_root' => '/usr/local/nagios',
+    'nagios_root' => Paths::NAGIOS_ROOT,
     'config_root' => 'etc/',
     'host_root' => 'hosts/',
     'template_root' => 'templates/',
@@ -82,8 +83,8 @@ $config[NagiosInterface::class] = [
 ];
 
 $config[SessionInterface::class] = [
-    'key' => '/config/private.pem', // needs to be generated
-    'public' => '/config/public.pub', // needs to be generated
+    'key' => Paths::SESSION_PRIVATE_KEY, // needs to be generated
+    'public' => Paths::SESSION_PUBLIC_KEY, // needs to be generated
     'timeout' => 1200, // two hours
 ];
 
