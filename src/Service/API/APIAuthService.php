@@ -37,7 +37,7 @@ class APIAuthService
         $response = $this->api->post('/tokens', [
             'username' => $username,
             'password' => $password,
-            'key' => $key
+            'key' => trim($key)
         ]);
 
         if ($response->getStatusCode() !== HttpCode::OK) {
