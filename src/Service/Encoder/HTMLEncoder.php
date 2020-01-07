@@ -46,6 +46,7 @@ class HTMLEncoder
         /** @var LazySession $session */
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
         $data['authenticated'] = (bool)$session->get(SessionKey::AUTHENTICATED);
+        $data['title'] = $data['title'] ?? 'Zently Box';
 
         return $this->twig->render($response, $template, $data)->withAddedHeader('Content-Type', 'text/html');
     }
