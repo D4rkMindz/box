@@ -1,4 +1,5 @@
 {
+  "name": "Name of the object",
   "type": "ONLINE_CHECK",
   "required": [
     "host_name",
